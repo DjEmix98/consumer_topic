@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<int-kafka:message-driven-channel-adapter
+        id="kafkaListener"
+        listener-container="container1"
+        auto-startup="false"
+        phase="100"
+        send-timeout="5000"
+        mode="record"
+        retry-template="template"
+        recovery-callback="callback"
+        error-message-strategy="ems"
+        channel="someChannel"
+        error-channel="errorChannel" />
+
+<bean id="container1" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+    <constructor-arg>
+        <bean class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+            <constructor-arg>
+                <map>
+                <entry key="bootstrap.servers" value="localhost:9092" />
+                ...
+                </map>
+            </constructor-arg>
+        </bean>
+    </constructor-arg>
+    <constructor-arg>
+        <bean class="org.springframework.kafka.listener.config.ContainerProperties">
+            <constructor-arg name="topics" value="foo" />
+        </bean>
+    </constructor-arg>
+
+</bean>
